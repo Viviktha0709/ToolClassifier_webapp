@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="upload-container">
+        <h1>Upload Tool Data</h1>
+        <div class="file-upload-box">
+            <form action="/predict" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".xlsx" required>
+        </div>
+        <button type="submit" class="predict-button">Predict</button>
+        </form>
+    </div>
+</body>
+</html>
