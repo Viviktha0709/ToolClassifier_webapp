@@ -2,8 +2,8 @@ from flask import Flask, request, render_template
 import pandas as pd
 import joblib
 
-app = Flask(__name__)
-model = joblib.load('C:\\Users\\Viviktha\\Downloads\\RandomForestModel (2).joblib')
+app = Flask(__name__, static_folder='static', template_folder='templates')
+model = joblib.load('model/rf_model.joblib')
 
 @app.route('/')
 def home():
@@ -12,24 +12,30 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     if 'file' not in request.files:
-        return 'No file uoloaded', 400
+        return 'No file uploaded', 400
     file = request.files['file']
-    
-    if file.filename =='':
-        return 'No selected file', 400
-    
-    #reading excel file into a pandas DataFrame
-    data = pd.read_excel(file)
-    
-    #Make predictions using the Random Forest model
-    predictions = model.predict(data)
-    
-    #Add predictions as a new column
-    data['prediction'] = predictions
-    data['prediction'] = data['prediction'].map({1: 'Rework', 0:'Reject'})
 
-    #Return the results as HTML 
-    result = zip(data['tool'], data['prediction'])
+    if file.filename == '':
+        return 'No selected file', 400
+
+    # Read CSV file into a pandas DataFrame
+    data = pd.read_csv(file)
+
+    # Extract tool column
+    tool_ids = data['tool']
+
+    # Drop non-feature columns
+    features = data
+
+    # Make predictions using the Random Forest model
+    predictions = model.predict(features)
+
+    # Map predictions to labels
+    data['prediction'] = predictions
+    data['prediction'] = data['prediction'].map({0: 'Rework', 1: 'Reject'})
+
+    # Return the results as HTML
+    result = zip(tool_ids, data['prediction'])
     return render_template('results.html', results=result)
 
 if __name__ == '__main__':
