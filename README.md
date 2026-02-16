@@ -107,3 +107,9 @@ This indicates strong minority-class detection while avoiding incorrect rejectio
 
 > Note: Due to the highly imbalanced dataset, evaluation focused on class-wise recall and F1-score rather than relying solely on overall accuracy.
 
+## Web Application UI
+
+<img width="776" height="373" alt="image" src="https://github.com/user-attachments/assets/4ee28772-df7b-41bf-801c-b2c2b7dd2ea5" />
+<img width="818" height="386" alt="image" src="https://github.com/user-attachments/assets/6a9c3446-7157-4f6f-8aff-67965dd15889" />
+
+
